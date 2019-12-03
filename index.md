@@ -28,4 +28,4 @@ Zadaniem urządzenia jest automatyczne dozowanie płynów o określonym czasie i
 * wyświetlanie aktualnego poziomu wody na ekranie OLED
 
 ## Schemat blokowy (uproszczony) 
-![Schemat blokowy](/iadp-blokowy%20(2).png)
+![Schemat blokowy](https://salamonrafal.github.io/iadp-docs/iadp-blokowy%20(2).png)
