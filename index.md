@@ -8,6 +8,7 @@ Witaj na stronie poświęconej mojemu małemu projektowi łączącego tworzenie 
 --- |
 **Pamiętaj**, że jestem nowicjuszem w dziedzinie elektroniki i układ może mieć wady więc mimo wszystko skonsultuj się z osobą, która jest w tej dziedzinie specjalistą i doradzi Tobie. |
 
+
 :grey_question: Pytania i opinie|
 --- |
 **Jeśli** znalazłeś coś co można ulepszyć, poprawić lub wykryłeś błąd poinformuj mnie o tym. Z chęcią przeanalizuje i naniosę poprawki. |
