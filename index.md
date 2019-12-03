@@ -1,37 +1,27 @@
-## Welcome to GitHub Pages
+# Inteligentny Automatyczny Dozownik Płynów
+## Powitanie
 
-You can use the [editor on GitHub](https://github.com/salamonrafal/iadp-docs/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
+Witaj na stronie poświęconej mojemu małemu projektowi łączącego tworzenie układu elektronicznego oraz potrzebnego do niego oprogramowania. Urządzenie o którym mowa to inteligentny automatyczny dozownik płynów (IADP). Będę go używał do dozowania nawozów w płynie w moim akwarium. Jeśli tak jak ja szukasz inspiracji do zabawy elektroniką to tutaj postaram umieścić wszystkie informacje potrzebne do stworzenia takiego układu oraz kodu źródłowego.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-### Markdown
+ :warning: Uwaga! |
+--- |
+**Pamiętaj**, że jestem nowicjuszem w dziedzinie elektroniki i układ może mieć wady więc mimo wszystko skonsultuj się z osobą, która jest w tej dziedzinie specjalistą i doradzi Tobie. |
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+:grey_question: Pytania i opinie|
+--- |
+**Jeśli** znalazłeś coś co można ulepszyć, poprawić lub wykryłeś błąd poinformuj mnie o tym. Z chęcią przeanalizuje i naniosę poprawki. |
 
-```markdown
-Syntax highlighted code block
+## Funkcje urządzenia
+Zadaniem urządzenia jest automatyczne dozowanie płynów o określonym czasie i określonej dawce. Oraz pomiar temperatury płynu i sprawdzenie poziomu płynu w zbiorniku.
 
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/salamonrafal/iadp-docs/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+### Pełna lista:
+* dozowanie płynów o określonym czasie i określonej dawce
+* trzy niezależne pompy, które dają możliwość dawkowanie trzech typów nawozów,
+* komunikacja WiFi,
+* zdalne sterowanie ustawieniami urządzenia,
+* czujnik temperatury wody w akwarium,
+* czujnik poziomu wody w akwarium,
+* wyświetlanie aktualnej temperatury wody na ekranie OLED,
+* zdalny odczyt aktualnej temperatury i poziomu wody,
+* wyświetlanie aktualnego poziomu wody na ekranie OLED
