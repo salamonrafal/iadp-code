@@ -26,3 +26,6 @@ Zadaniem urządzenia jest automatyczne dozowanie płynów o określonym czasie i
 * wyświetlanie aktualnej temperatury wody na ekranie OLED,
 * zdalny odczyt aktualnej temperatury i poziomu wody,
 * wyświetlanie aktualnego poziomu wody na ekranie OLED
+
+## Schemat blokowy (uproszczony) 
+![Schemat blokowy](/iadp-blokowy%20(2).png)
