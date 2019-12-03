@@ -4,12 +4,12 @@
 Witaj na stronie poświęconej mojemu małemu projektowi łączącego tworzenie układu elektronicznego oraz potrzebnego do niego oprogramowania. Urządzenie o którym mowa to inteligentny automatyczny dozownik płynów (IADP). Będę go używał do dozowania nawozów w płynie w moim akwarium. Jeśli tak jak ja szukasz inspiracji do zabawy elektroniką to tutaj postaram umieścić wszystkie informacje potrzebne do stworzenia takiego układu oraz kodu źródłowego.
 
 
- :warning: Uwaga! |
+(!) Uwaga! |
 --- |
 **Pamiętaj**, że jestem nowicjuszem w dziedzinie elektroniki i układ może mieć wady więc mimo wszystko skonsultuj się z osobą, która jest w tej dziedzinie specjalistą i doradzi Tobie. |
 
 
-:grey_question: Pytania i opinie|
+(?) Pytania i opinie|
 --- |
 **Jeśli** znalazłeś coś co można ulepszyć, poprawić lub wykryłeś błąd poinformuj mnie o tym. Z chęcią przeanalizuje i naniosę poprawki. |
 
