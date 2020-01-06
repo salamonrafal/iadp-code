@@ -14,11 +14,13 @@ _S_Def_Display_OLED createDisplayOLEDSettings() {
   S_Display_OLED.cs_pin = 5;
   S_Display_OLED.width = 128;
   S_Display_OLED.height = 64;
+  
   return S_Display_OLED;
 }
 
 _Def_Settings createMainSettings() {
   S_Settings.display_oled = createDisplayOLEDSettings();
+  
   return S_Settings;
 }
 
