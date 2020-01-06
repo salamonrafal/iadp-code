@@ -31,5 +31,21 @@ void setup() {
 
 void loop(void) {
   char date[11] = "01.01.2020";
+  char chTime[6] = "12:30";
+
+  char chTimes[5][6] = {"12:31", "12:32", "12:33", "12:34", "12:35"};
+
+  displaConnectedSignalWifi(oled_screen_128_64);
+  
   printDate(oled_screen_128_64, date);
+  printTime(oled_screen_128_64, chTime);
+  delay(1000);
+  
+  displaNotConnectedSignalWifi(oled_screen_128_64);
+  
+  for(int i = 0; i < 5; i++) {
+    printTime(oled_screen_128_64, chTimes[i]);
+    delay(1000);
+  }
+  
 }

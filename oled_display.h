@@ -8,6 +8,13 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+#include "icons.h"
+
+/*
+ * CONST
+ */
+
+#define OLED_FONT_SIZE 7
 
 /*
  * [PUBLIC METHODS]
@@ -68,14 +75,73 @@ void drawGrid(Adafruit_SSD1306 &oled_screen_128_64) {
  * Drawing on yellow screen current date (top color screen)
  * 
  * @param oled_screen_128_64 reference to Adafruit class
- * @param date[11] current date to display max 10 chars
+ * @param chDate[11] current date to display max 10 chars
  */
-void printDate(Adafruit_SSD1306 &oled_screen_128_64, char date[11]) {
-  oled_screen_128_64.fillRect(0, 0, 60, 10, BLACK);
-  oled_screen_128_64.setCursor(0, 0);
-  oled_screen_128_64.print(date);
+void printDate(Adafruit_SSD1306 &oled_screen_128_64, char chDate[11]) {
+  int poxX = 0;
+  int posY = 0;
+  
+  oled_screen_128_64.fillRect(poxX, posY, 60, OLED_FONT_SIZE, BLACK);
+  oled_screen_128_64.setCursor(poxX, posY);
+  oled_screen_128_64.setTextSize(0.3);
+  oled_screen_128_64.setTextColor(WHITE);
+  oled_screen_128_64.print(chDate);
+  
   oled_screen_128_64.display();
 }
+
+/**
+ * Drawing on yellow screen current time
+ * 
+ * @param oled_screen_128_64 reference to Adafruit class
+ * @param chTime[6] current time to display max 5 chars
+ */
+void printTime(Adafruit_SSD1306 &oled_screen_128_64, char chTime[6]) {
+  int poxX = 30;
+  int posY = 9;
+  
+  oled_screen_128_64.fillRect(poxX, posY, 29, OLED_FONT_SIZE, BLACK);
+  oled_screen_128_64.setCursor(poxX, posY);
+  oled_screen_128_64.setTextSize(0.1);
+  oled_screen_128_64.setTextColor(WHITE);
+  oled_screen_128_64.print(chTime);
+  oled_screen_128_64.display();
+}
+
+/**
+ * Display WiFi signal OK on screen
+ * 
+ * @param oled_screen_128_64 reference to Adafruit class
+ * @param isVisible logo should be displayed
+ */
+void displaConnectedSignalWifi(Adafruit_SSD1306 &oled_screen_128_64, boolean isVisible = true) {
+  int poxX = 112;
+  int posY = 0;
+  
+  oled_screen_128_64.fillRect(poxX, posY, _ICONS_SIZE_TOP_WIDTH, _ICONS_SIZE_TOP_HEIGHT, BLACK);
+
+  if (isVisible) {
+    oled_screen_128_64.drawBitmap(poxX, posY, _ICONS_WIFI_SIGNAL_16X16, _ICONS_SIZE_TOP_WIDTH, _ICONS_SIZE_TOP_HEIGHT, 1);  
+  }
+}
+
+/**
+ * Display WiFi no signal on screen
+ * 
+ * @param oled_screen_128_64 reference to Adafruit class
+ * @param isVisible logo should be displayed
+ */
+void displaNotConnectedSignalWifi(Adafruit_SSD1306 &oled_screen_128_64, boolean isVisible = true) {
+  int poxX = 112;
+  int posY = 0;
+  
+  oled_screen_128_64.fillRect(poxX, posY, _ICONS_SIZE_TOP_WIDTH, _ICONS_SIZE_TOP_HEIGHT, BLACK);
+
+  if (isVisible) {
+    oled_screen_128_64.drawBitmap(poxX, posY, _ICONS_WIFI_NO_SIGNAL_16X16, _ICONS_SIZE_TOP_WIDTH, _ICONS_SIZE_TOP_HEIGHT, 1);
+  }
+}
+
 
 /*
  * [PRIVATE METHODS]
