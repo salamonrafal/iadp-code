@@ -17,8 +17,117 @@
 #define OLED_FONT_SIZE 7
 
 /*
+ * [PRIVATE METHODS]
+ */
+
+/**
+ * Drwaing block title
+ * 
+ * @param oled_screen_128_64 reference to Adafruit class 
+ * @param posX start drawing on X vector
+ * @param posY start drawing on Y vector
+ * @param blockWidth current block width
+ * @param txTitle title
+ */
+void __printBlockTitle(Adafruit_SSD1306 &oled_screen_128_64, int posX,  int posY, int blockWidth, const char txTitle[]) {
+  int margin = 2;
+  oled_screen_128_64.fillRect(posX, posY, blockWidth, OLED_FONT_SIZE+margin+margin, WHITE);
+  oled_screen_128_64.setCursor(posX+margin, posY+margin);
+  oled_screen_128_64.setTextSize(1);
+  oled_screen_128_64.setTextColor(BLACK);
+  oled_screen_128_64.print(txTitle);
+}
+
+/**
+ * Drwaing block title
+ * 
+ * @param oled_screen_128_64 reference to Adafruit class 
+ * @param posX start drawing on X vector
+ * @param posY start drawing on Y vector
+ * @param blockWidth current block width
+ * @param txTitle title
+ */
+void __printBlockTitle(Adafruit_SSD1306 &oled_screen_128_64, int posX,  int posY, int blockWidth, char txTitle[]) {
+  int margin = 2;
+  oled_screen_128_64.fillRect(posX, posY, blockWidth, OLED_FONT_SIZE+margin+margin, WHITE);
+  oled_screen_128_64.setCursor(posX+margin, posY+margin);
+  oled_screen_128_64.setTextSize(1);
+  oled_screen_128_64.setTextColor(BLACK);
+  oled_screen_128_64.print(txTitle);
+}
+
+/**
+ * Drawing current temperature
+ * 
+ * @param oled_screen_128_64 reference to Adafruit class 
+ * @param posX start drawing on X vector
+ * @param posY start drawing on Y vector
+ * @param blockWidth current block width
+ * @param dValue temperature value
+ */
+void __displayTemperature(Adafruit_SSD1306 &oled_screen_128_64, int posX,  int posY, int blockWidth, double dValue) {
+  int topMargin = 12;
+  int leftMargin = 6;
+  int posYMargin = posY+topMargin;
+  int posXMargin = posX+leftMargin;
+  
+  oled_screen_128_64.drawBitmap(posXMargin, posY+topMargin, _ICONS_THERMOMETER_16x16, _ICONS_SIZE_TOP_WIDTH, _ICONS_SIZE_TOP_HEIGHT, 1);
+  oled_screen_128_64.setCursor(posXMargin+17, posY+topMargin);
+  oled_screen_128_64.setTextSize(2);
+  oled_screen_128_64.setTextColor(WHITE);
+  oled_screen_128_64.print((uint8_t) dValue);
+}
+
+/**
+ * Drawing current temperature
+ * 
+ * @param oled_screen_128_64 reference to Adafruit class 
+ * @param posX start drawing on X vector
+ * @param posY start drawing on Y vector
+ * @param blockWidth current block width
+ * @param dValue humidity value
+ */
+void __displayHumidity(Adafruit_SSD1306 &oled_screen_128_64, int posX,  int posY, int blockWidth, double dValue) {
+  int topMargin = 30;
+  int leftMargin = 6;
+  int posYMargin = posY+topMargin;
+  int posXMargin = posX+leftMargin;
+
+
+  oled_screen_128_64.drawBitmap(posXMargin, posY+topMargin, _ICONS_HUMIDITY_16x16, _ICONS_SIZE_TOP_WIDTH, _ICONS_SIZE_TOP_HEIGHT, 1);
+  oled_screen_128_64.setCursor(posXMargin+17, posY+topMargin);
+  oled_screen_128_64.setTextSize(2);
+  oled_screen_128_64.setTextColor(WHITE);
+  oled_screen_128_64.printf("%d%%", (int) dValue);
+}
+
+/**
+ * Drawing current wather level
+ * 
+ * @param oled_screen_128_64 reference to Adafruit class 
+ * @param posX start drawing on X vector
+ * @param posY start drawing on Y vector
+ * @param blockWidth current block width
+ * @param isToLow flag water is to low
+ */
+void __displayWaterLevel(Adafruit_SSD1306 &oled_screen_128_64, int posX,  int posY, int blockWidth, boolean isToLow) {
+  int topMargin = 30;
+  int leftMargin = (blockWidth-16)/2;
+  int posYMargin = posY+topMargin;
+  int posXMargin = posX+leftMargin;
+
+  if (isToLow == true) {
+    oled_screen_128_64.drawBitmap(posXMargin, posY+topMargin, _ICONS_WATER_LEVEL_LOW, _ICONS_SIZE_TOP_WIDTH, _ICONS_SIZE_TOP_HEIGHT, 1);
+  } else {
+    oled_screen_128_64.drawBitmap(posXMargin, posY+topMargin, _ICONS_WATER_LEVEL_HIGH, _ICONS_SIZE_TOP_WIDTH, _ICONS_SIZE_TOP_HEIGHT, 1);
+  }
+}
+
+
+/*
  * [PUBLIC METHODS]
  */
+
 
 /**
  * Initial OLED display
@@ -78,12 +187,12 @@ void drawGrid(Adafruit_SSD1306 &oled_screen_128_64) {
  * @param chDate[11] current date to display max 10 chars
  */
 void printDate(Adafruit_SSD1306 &oled_screen_128_64, char chDate[11]) {
-  int poxX = 0;
+  int posX = 0;
   int posY = 0;
   
-  oled_screen_128_64.fillRect(poxX, posY, 60, OLED_FONT_SIZE, BLACK);
-  oled_screen_128_64.setCursor(poxX, posY);
-  oled_screen_128_64.setTextSize(0.3);
+  oled_screen_128_64.fillRect(posX, posY, 60, OLED_FONT_SIZE, BLACK);
+  oled_screen_128_64.setCursor(posX, posY);
+  oled_screen_128_64.setTextSize(1);
   oled_screen_128_64.setTextColor(WHITE);
   oled_screen_128_64.print(chDate);
   
@@ -97,12 +206,12 @@ void printDate(Adafruit_SSD1306 &oled_screen_128_64, char chDate[11]) {
  * @param chTime[6] current time to display max 5 chars
  */
 void printTime(Adafruit_SSD1306 &oled_screen_128_64, char chTime[6]) {
-  int poxX = 30;
+  int posX = 30;
   int posY = 9;
   
-  oled_screen_128_64.fillRect(poxX, posY, 29, OLED_FONT_SIZE, BLACK);
-  oled_screen_128_64.setCursor(poxX, posY);
-  oled_screen_128_64.setTextSize(0.1);
+  oled_screen_128_64.fillRect(posX, posY, 29, OLED_FONT_SIZE, BLACK);
+  oled_screen_128_64.setCursor(posX, posY);
+  oled_screen_128_64.setTextSize(1);
   oled_screen_128_64.setTextColor(WHITE);
   oled_screen_128_64.print(chTime);
   oled_screen_128_64.display();
@@ -115,13 +224,13 @@ void printTime(Adafruit_SSD1306 &oled_screen_128_64, char chTime[6]) {
  * @param isVisible logo should be displayed
  */
 void displaConnectedSignalWifi(Adafruit_SSD1306 &oled_screen_128_64, boolean isVisible = true) {
-  int poxX = 112;
+  int posX = 112;
   int posY = 0;
   
-  oled_screen_128_64.fillRect(poxX, posY, _ICONS_SIZE_TOP_WIDTH, _ICONS_SIZE_TOP_HEIGHT, BLACK);
+  oled_screen_128_64.fillRect(posX, posY, _ICONS_SIZE_TOP_WIDTH, _ICONS_SIZE_TOP_HEIGHT, BLACK);
 
   if (isVisible) {
-    oled_screen_128_64.drawBitmap(poxX, posY, _ICONS_WIFI_SIGNAL_16X16, _ICONS_SIZE_TOP_WIDTH, _ICONS_SIZE_TOP_HEIGHT, 1);  
+    oled_screen_128_64.drawBitmap(posX, posY, _ICONS_WIFI_SIGNAL_16X16, _ICONS_SIZE_TOP_WIDTH, _ICONS_SIZE_TOP_HEIGHT, 1);  
   }
 }
 
@@ -132,18 +241,54 @@ void displaConnectedSignalWifi(Adafruit_SSD1306 &oled_screen_128_64, boolean isV
  * @param isVisible logo should be displayed
  */
 void displaNotConnectedSignalWifi(Adafruit_SSD1306 &oled_screen_128_64, boolean isVisible = true) {
-  int poxX = 112;
+  int posX = 112;
   int posY = 0;
   
-  oled_screen_128_64.fillRect(poxX, posY, _ICONS_SIZE_TOP_WIDTH, _ICONS_SIZE_TOP_HEIGHT, BLACK);
+  oled_screen_128_64.fillRect(posX, posY, _ICONS_SIZE_TOP_WIDTH, _ICONS_SIZE_TOP_HEIGHT, BLACK);
 
   if (isVisible) {
-    oled_screen_128_64.drawBitmap(poxX, posY, _ICONS_WIFI_NO_SIGNAL_16X16, _ICONS_SIZE_TOP_WIDTH, _ICONS_SIZE_TOP_HEIGHT, 1);
+    oled_screen_128_64.drawBitmap(posX, posY, _ICONS_WIFI_NO_SIGNAL_16X16, _ICONS_SIZE_TOP_WIDTH, _ICONS_SIZE_TOP_HEIGHT, 1);
   }
 }
 
-
-/*
- * [PRIVATE METHODS]
+/**
+ * Display left col with information about room
+ * 
+ * @param oled_screen_128_64 reference to Adafruit class
+ * @param dTemperature current temperature in room
+ * @param dHumidity current humidity in room
  */
+void displayLeftColumne(Adafruit_SSD1306 &oled_screen_128_64, double dTemperature = 0.0, double dHumidity = 0) {
+  int posX = 1;
+  int posY = 18;
+  int blockWidth = 62;
+  int blockHeight = 45;
+  
+  oled_screen_128_64.fillRect(posX, posY, blockWidth, blockHeight, BLACK);
+  oled_screen_128_64.setCursor(posX, posY);
+  __printBlockTitle(oled_screen_128_64, posX, posY, blockWidth, _T_PL_ROOM);
+  __displayTemperature(oled_screen_128_64, posX, posY, blockWidth, dTemperature);
+  __displayHumidity(oled_screen_128_64, posX, posY, blockWidth, dHumidity);
+}
+
+/**
+ * Display left col with information about aquarium
+ * 
+ * @param oled_screen_128_64 reference to Adafruit class
+ * @param dTemperature current temperature in aquarium
+ * @param waterIsToLow current flag whater level in aquarium
+ */
+void displayRightColumne(Adafruit_SSD1306 &oled_screen_128_64, double dTemperature = 0.0, boolean waterIsToLow = false) {
+  int posX = 66;
+  int posY = 18;
+  int blockWidth = 61;
+  int blockHeight = 45;
+  
+  oled_screen_128_64.fillRect(posX, posY, blockWidth, blockHeight, BLACK);
+  oled_screen_128_64.setCursor(posX, posY);
+  __printBlockTitle(oled_screen_128_64, posX, posY, blockWidth, _T_PL_AQUA);
+  __displayTemperature(oled_screen_128_64, posX, posY, blockWidth, dTemperature);
+  __displayWaterLevel(oled_screen_128_64, posX, posY, blockWidth, waterIsToLow);
+}
+
 #endif //_OLED_DISPLAY_

@@ -36,6 +36,10 @@ void loop(void) {
   char chTimes[5][6] = {"12:31", "12:32", "12:33", "12:34", "12:35"};
 
   displaConnectedSignalWifi(oled_screen_128_64);
+
+  
+  displayLeftColumne(oled_screen_128_64, 26.5,85);
+  displayRightColumne(oled_screen_128_64, 24, false);
   
   printDate(oled_screen_128_64, date);
   printTime(oled_screen_128_64, chTime);
@@ -45,6 +49,7 @@ void loop(void) {
   
   for(int i = 0; i < 5; i++) {
     printTime(oled_screen_128_64, chTimes[i]);
+    displayRightColumne(oled_screen_128_64, 25+i, (25+i % 2 == 0) ? false : true);
     delay(1000);
   }
   
