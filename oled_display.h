@@ -9,6 +9,7 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include "icons.h"
+#include "images.h"
 
 /*
  * CONST
@@ -175,6 +176,7 @@ Adafruit_SSD1306 setupDisplayOLED(
  * @param oled_screen_128_64 reference to Adafruit class 
  */
 void drawGrid(Adafruit_SSD1306 &oled_screen_128_64) {
+  oled_screen_128_64.clearDisplay();
   oled_screen_128_64.drawFastHLine(0, 16, 128, WHITE);
   oled_screen_128_64.drawFastVLine(64, 16, 48, WHITE);
   oled_screen_128_64.display();
@@ -289,6 +291,17 @@ void displayRightColumne(Adafruit_SSD1306 &oled_screen_128_64, double dTemperatu
   __printBlockTitle(oled_screen_128_64, posX, posY, blockWidth, _T_PL_AQUA);
   __displayTemperature(oled_screen_128_64, posX, posY, blockWidth, dTemperature);
   __displayWaterLevel(oled_screen_128_64, posX, posY, blockWidth, waterIsToLow);
+}
+
+/**
+ * Display splash screen
+ * 
+ * @param oled_screen_128_64 reference to Adafruit class
+ */
+void displaySplashScreen(Adafruit_SSD1306 &oled_screen_128_64) {
+  oled_screen_128_64.clearDisplay();
+  oled_screen_128_64.drawBitmap(0, 16, _IMAGE_LOGO_SPLASH, _IMAGES_SIZE_SPLASH_WIDTH, _IMAGES_SIZE_SPLASH_HEIGHT, 1);
+  oled_screen_128_64.display();
 }
 
 #endif //_OLED_DISPLAY_

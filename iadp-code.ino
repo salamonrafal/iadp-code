@@ -18,6 +18,8 @@ void setup() {
     Settings.display_oled.cs_pin
   );
 
+  displaySplashScreen(oled_screen_128_64);
+  delay(5000);
   drawGrid(oled_screen_128_64);
 
   //Serial.println(Settings.display_oled.mosi_pin);
