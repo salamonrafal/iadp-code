@@ -19,6 +19,11 @@
 
 namespace Saltronix {
   namespace OLED_Display {
+    using namespace Saltronix::Consts::Icons;
+    using namespace Saltronix::Consts::Images;
+
+    double tmpTemperature = 0;
+    double tmpHumidity = 0;
     /*
      * [PRIVATE METHODS]
      */
@@ -52,6 +57,7 @@ namespace Saltronix {
      */
     void __printBlockTitle(Adafruit_SSD1306 &oled_screen_128_64, int posX,  int posY, int blockWidth, char txTitle[]) {
       int margin = 2;
+      
       oled_screen_128_64.fillRect(posX, posY, blockWidth, OLED_FONT_SIZE+margin+margin, WHITE);
       oled_screen_128_64.setCursor(posX+margin, posY+margin);
       oled_screen_128_64.setTextSize(1);
@@ -74,7 +80,7 @@ namespace Saltronix {
       int posYMargin = posY+topMargin;
       int posXMargin = posX+leftMargin;
       
-      oled_screen_128_64.drawBitmap(posXMargin, posYMargin, _ICONS_THERMOMETER_16x16, _ICONS_SIZE_TOP_WIDTH, _ICONS_SIZE_TOP_HEIGHT, 1);
+      oled_screen_128_64.drawBitmap(posXMargin, posYMargin, ICONS_THERMOMETER_16x16, ICONS_SIZE_TOP_WIDTH, ICONS_SIZE_TOP_HEIGHT, 1);
       oled_screen_128_64.setCursor(posXMargin+17, posYMargin);
       oled_screen_128_64.setTextSize(2);
       oled_screen_128_64.setTextColor(WHITE);
@@ -96,8 +102,7 @@ namespace Saltronix {
       int posYMargin = posY+topMargin;
       int posXMargin = posX+leftMargin;
     
-    
-      oled_screen_128_64.drawBitmap(posXMargin, posYMargin, _ICONS_HUMIDITY_16x16, _ICONS_SIZE_TOP_WIDTH, _ICONS_SIZE_TOP_HEIGHT, 1);
+      oled_screen_128_64.drawBitmap(posXMargin, posYMargin, ICONS_HUMIDITY_16x16, ICONS_SIZE_TOP_WIDTH, ICONS_SIZE_TOP_HEIGHT, 1);
       oled_screen_128_64.setCursor(posXMargin+17, posYMargin);
       oled_screen_128_64.setTextSize(2);
       oled_screen_128_64.setTextColor(WHITE);
@@ -119,11 +124,10 @@ namespace Saltronix {
       int posYMargin = posY+topMargin;
       int posXMargin = posX+leftMargin;
     
-      if (isToLow == true) {
-        oled_screen_128_64.drawBitmap(posXMargin, posYMargin, _ICONS_WATER_LEVEL_LOW, _ICONS_SIZE_TOP_WIDTH, _ICONS_SIZE_TOP_HEIGHT, 1);
-      } else {
-        oled_screen_128_64.drawBitmap(posXMargin, posYMargin, _ICONS_WATER_LEVEL_HIGH, _ICONS_SIZE_TOP_WIDTH, _ICONS_SIZE_TOP_HEIGHT, 1);
-      }
+      if (isToLow == true) 
+        oled_screen_128_64.drawBitmap(posXMargin, posYMargin, ICONS_WATER_LEVEL_LOW, ICONS_SIZE_TOP_WIDTH, ICONS_SIZE_TOP_HEIGHT, 1);
+      else 
+        oled_screen_128_64.drawBitmap(posXMargin, posYMargin, ICONS_WATER_LEVEL_HIGH, ICONS_SIZE_TOP_WIDTH, ICONS_SIZE_TOP_HEIGHT, 1);
     }
     
     
@@ -231,10 +235,10 @@ namespace Saltronix {
       int posX = 112;
       int posY = 0;
       
-      oled_screen_128_64.fillRect(posX, posY, _ICONS_SIZE_TOP_WIDTH, _ICONS_SIZE_TOP_HEIGHT, BLACK);
+      oled_screen_128_64.fillRect(posX, posY, ICONS_SIZE_TOP_WIDTH, ICONS_SIZE_TOP_HEIGHT, BLACK);
     
       if (isVisible) {
-        oled_screen_128_64.drawBitmap(posX, posY, _ICONS_WIFI_SIGNAL_16X16, _ICONS_SIZE_TOP_WIDTH, _ICONS_SIZE_TOP_HEIGHT, 1);  
+        oled_screen_128_64.drawBitmap(posX, posY, ICONS_WIFI_SIGNAL_16X16, ICONS_SIZE_TOP_WIDTH, ICONS_SIZE_TOP_HEIGHT, 1);  
       }
     }
     
@@ -248,10 +252,10 @@ namespace Saltronix {
       int posX = 112;
       int posY = 0;
       
-      oled_screen_128_64.fillRect(posX, posY, _ICONS_SIZE_TOP_WIDTH, _ICONS_SIZE_TOP_HEIGHT, BLACK);
+      oled_screen_128_64.fillRect(posX, posY, ICONS_SIZE_TOP_WIDTH, ICONS_SIZE_TOP_HEIGHT, BLACK);
     
       if (isVisible) {
-        oled_screen_128_64.drawBitmap(posX, posY, _ICONS_WIFI_NO_SIGNAL_16X16, _ICONS_SIZE_TOP_WIDTH, _ICONS_SIZE_TOP_HEIGHT, 1);
+        oled_screen_128_64.drawBitmap(posX, posY, ICONS_WIFI_NO_SIGNAL_16X16, ICONS_SIZE_TOP_WIDTH, ICONS_SIZE_TOP_HEIGHT, 1);
       }
     }
     
@@ -267,12 +271,18 @@ namespace Saltronix {
       int posY = 18;
       int blockWidth = 62;
       int blockHeight = 45;
+
+      if (!isnan(dTemperature)) 
+        tmpTemperature = dTemperature;
+
+      if (!isnan(dHumidity)) 
+        tmpHumidity = dHumidity;
       
       oled_screen_128_64.fillRect(posX, posY, blockWidth, blockHeight, BLACK);
       oled_screen_128_64.setCursor(posX, posY);
       __printBlockTitle(oled_screen_128_64, posX, posY, blockWidth, _T_PL_ROOM);
-      __displayTemperature(oled_screen_128_64, posX, posY, blockWidth, dTemperature);
-      __displayHumidity(oled_screen_128_64, posX, posY, blockWidth, dHumidity);
+      __displayTemperature(oled_screen_128_64, posX, posY, blockWidth, tmpTemperature);
+      __displayHumidity(oled_screen_128_64, posX, posY, blockWidth, tmpHumidity);
     }
     
     /**
@@ -293,6 +303,7 @@ namespace Saltronix {
       __printBlockTitle(oled_screen_128_64, posX, posY, blockWidth, _T_PL_AQUA);
       __displayTemperature(oled_screen_128_64, posX, posY, blockWidth, dTemperature);
       __displayWaterLevel(oled_screen_128_64, posX, posY, blockWidth, waterIsToLow);
+
     }
     
     /**
@@ -302,7 +313,16 @@ namespace Saltronix {
      */
     void displaySplashScreen(Adafruit_SSD1306 &oled_screen_128_64) {
       oled_screen_128_64.clearDisplay();
-      oled_screen_128_64.drawBitmap(0, 16, _IMAGE_LOGO_SPLASH, _IMAGES_SIZE_SPLASH_WIDTH, _IMAGES_SIZE_SPLASH_HEIGHT, 1);
+      oled_screen_128_64.drawBitmap(0, 16, IMAGE_LOGO_SPLASH, IMAGES_SIZE_SPLASH_WIDTH, IMAGES_SIZE_SPLASH_HEIGHT, 1);
+      oled_screen_128_64.display();
+    }
+
+    /**
+     * Display all on screen
+     * 
+     * @param oled_screen_128_64 reference to Adafruit class
+     */
+    void displayAllOnScreen(Adafruit_SSD1306 &oled_screen_128_64) {
       oled_screen_128_64.display();
     }
   }
