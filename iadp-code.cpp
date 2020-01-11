@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include "settings.h"
 #include "translations.h"
 #include "oled_display.h"

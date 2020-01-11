@@ -10,6 +10,7 @@
 #include <Adafruit_SSD1306.h>
 #include "icons.h"
 #include "images.h"
+#include "translations.h"
 
 /*
  * CONST
@@ -73,8 +74,8 @@ namespace Saltronix {
       int posYMargin = posY+topMargin;
       int posXMargin = posX+leftMargin;
       
-      oled_screen_128_64.drawBitmap(posXMargin, posY+topMargin, _ICONS_THERMOMETER_16x16, _ICONS_SIZE_TOP_WIDTH, _ICONS_SIZE_TOP_HEIGHT, 1);
-      oled_screen_128_64.setCursor(posXMargin+17, posY+topMargin);
+      oled_screen_128_64.drawBitmap(posXMargin, posYMargin, _ICONS_THERMOMETER_16x16, _ICONS_SIZE_TOP_WIDTH, _ICONS_SIZE_TOP_HEIGHT, 1);
+      oled_screen_128_64.setCursor(posXMargin+17, posYMargin);
       oled_screen_128_64.setTextSize(2);
       oled_screen_128_64.setTextColor(WHITE);
       oled_screen_128_64.print((uint8_t) dValue);
@@ -96,8 +97,8 @@ namespace Saltronix {
       int posXMargin = posX+leftMargin;
     
     
-      oled_screen_128_64.drawBitmap(posXMargin, posY+topMargin, _ICONS_HUMIDITY_16x16, _ICONS_SIZE_TOP_WIDTH, _ICONS_SIZE_TOP_HEIGHT, 1);
-      oled_screen_128_64.setCursor(posXMargin+17, posY+topMargin);
+      oled_screen_128_64.drawBitmap(posXMargin, posYMargin, _ICONS_HUMIDITY_16x16, _ICONS_SIZE_TOP_WIDTH, _ICONS_SIZE_TOP_HEIGHT, 1);
+      oled_screen_128_64.setCursor(posXMargin+17, posYMargin);
       oled_screen_128_64.setTextSize(2);
       oled_screen_128_64.setTextColor(WHITE);
       oled_screen_128_64.printf("%d%%", (int) dValue);
@@ -119,9 +120,9 @@ namespace Saltronix {
       int posXMargin = posX+leftMargin;
     
       if (isToLow == true) {
-        oled_screen_128_64.drawBitmap(posXMargin, posY+topMargin, _ICONS_WATER_LEVEL_LOW, _ICONS_SIZE_TOP_WIDTH, _ICONS_SIZE_TOP_HEIGHT, 1);
+        oled_screen_128_64.drawBitmap(posXMargin, posYMargin, _ICONS_WATER_LEVEL_LOW, _ICONS_SIZE_TOP_WIDTH, _ICONS_SIZE_TOP_HEIGHT, 1);
       } else {
-        oled_screen_128_64.drawBitmap(posXMargin, posY+topMargin, _ICONS_WATER_LEVEL_HIGH, _ICONS_SIZE_TOP_WIDTH, _ICONS_SIZE_TOP_HEIGHT, 1);
+        oled_screen_128_64.drawBitmap(posXMargin, posYMargin, _ICONS_WATER_LEVEL_HIGH, _ICONS_SIZE_TOP_WIDTH, _ICONS_SIZE_TOP_HEIGHT, 1);
       }
     }
     
