@@ -1,8 +1,8 @@
 /**
  * @author Rafał Salamon <rafcio0584@gmail.com>
  */
-#ifndef _OLED_ICONS_DISPLAY_
-#define _OLED_ICONS_DISPLAY_
+#ifndef _CONSTS_ICONS_
+#define _CONSTS_ICONS_
 
 namespace Saltronix {
   namespace Consts {
@@ -44,4 +44,5 @@ namespace Saltronix {
     }
   }
 }
-#endif //_OLED_ICONS_DISPLAY_
+
+#endif //_CONSTS_ICONS_

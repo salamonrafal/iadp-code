@@ -7,7 +7,9 @@
 
 namespace Saltronix {
     namespace Rtc {
-
+        namespace DS3231 {
+            
+        }
     }
 }
 

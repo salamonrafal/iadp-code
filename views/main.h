@@ -5,11 +5,11 @@
 #ifndef _VIEWS_MAIN_
 #define _VIEWS_MAIN_
 
-#include "oled_display.h"
-#include "sensors.h"
+#include "Saltronix/Display/oled_display.h"
+#include "Saltronix/Sensors/dht11.h"
 
-using namespace Saltronix::OLED_Display;
-using namespace Saltronix::Sensor_DHT11;
+using namespace Saltronix::Display::OLED;
+using namespace Saltronix::Sensors::DHT11;
 
 namespace Saltronix {
     namespace Views {
@@ -46,7 +46,6 @@ namespace Saltronix {
             printDate(oled_screen_128_64, cDate);
             printTime(oled_screen_128_64, cTime);
         }
-        
     }
 }
 #endif // _VIEWS_MAIN_

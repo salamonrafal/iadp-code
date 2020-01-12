@@ -3,20 +3,23 @@
  * @version 0.0.1
  */
 #include <Arduino.h>
-#include "common_consts.h"
-#include "settings.h"
-#include "translations.h"
-#include "oled_display.h"
-#include "sensors.h"
-#include "rtc_time.h"
+#include <SPI.h>
+#include <Wire.h>
+#include "Saltronix/Consts/common_consts.h"
+#include "Saltronix/Settings/settings.h"
+#include "Saltronix/Consts/translations.h"
+#include "Saltronix/Display/oled_display.h"
+#include "Saltronix/Sensors/dht11.h"
+#include "Saltronix/Rtc/ds3231.h"
 #include "views/main.h"
 
-using namespace Saltronix::OLED_Display;
-using namespace Saltronix::Sensor_DHT11;
+using namespace Saltronix::Display::OLED;
+using namespace Saltronix::Sensors::DHT11;
 using namespace Saltronix::Settings;
-using namespace Saltronix::Rtc;
+using namespace Saltronix::Rtc::DS3231;
 using namespace Saltronix::Consts;
 using namespace Saltronix::Views;
+using namespace Saltronix::Consts::Translations;
 
 struct _S_Def_Settings Settings;
 Adafruit_SSD1306 oled_screen_128_64;
