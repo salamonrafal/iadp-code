@@ -39,8 +39,7 @@ namespace Saltronix
 
       returnData.temperature = lastValues.temperature;
       returnData.humidity = lastValues.humidity;
-Serial.println(String(lastValues.temperature, 0));
-Serial.println(String(lastValues.humidity, 0));
+      
       return returnData;
     }
   }

@@ -9,18 +9,21 @@
 #include "oled_display.h"
 #include "sensors.h"
 #include "rtc_time.h"
+#include "views/main.h"
 
 using namespace Saltronix::OLED_Display;
 using namespace Saltronix::Sensor_DHT11;
 using namespace Saltronix::Settings;
 using namespace Saltronix::Rtc;
 using namespace Saltronix::Consts;
+using namespace Saltronix::Views;
 
 struct _S_Def_Settings Settings;
 Adafruit_SSD1306 oled_screen_128_64;
 
 DHTesp dht;
 TaskHandle_t tempTaskHandle = NULL;
+
 
 void setup() {
   Serial.begin(SERIAL_SPEED);
@@ -45,7 +48,7 @@ void setup() {
   displayNotConnectedSignalWifi(oled_screen_128_64);
   displayAllOnScreen(oled_screen_128_64);
   
-  delay(1000);
+  delay(100);
 
   Serial.println("--->");
   Serial.print("Settings.sensors.dht_sensor_pin: ");
@@ -57,25 +60,13 @@ void setup() {
 
 void loop(void) {
   DHTSensorValue DHTSensorData = getDataFromDHTSensor(dht);
-  char date[11] = "01.01.2020";
-  char chTime[6] = "12:30";
+  char cDate[11] = "01.01.2020";
+  char cTime[6] = "12:30";
   double dTempAqua = 24;
-  //char chTimes[5][6] = {"12:31", "12:32", "12:33", "12:34", "12:35"};
 
-  displayConnectedSignalWifi(oled_screen_128_64);
-
-  displayLeftColumne(oled_screen_128_64, DHTSensorData.temperature, DHTSensorData.humidity);
-  displayRightColumne(oled_screen_128_64, dTempAqua, false);
+  drawMainPage(oled_screen_128_64, cDate, cTime, DHTSensorData, dTempAqua, false, false);
   
-  printDate(oled_screen_128_64, date);
-  printTime(oled_screen_128_64, chTime);
   Serial.println(DHTSensorData.temperature);
   Serial.println(DHTSensorData.humidity);
-  delay(1000);
-  /*for(int i = 0; i < 5; i++) {
-    printTime(oled_screen_128_64, chTimes[i]);
-    displayRightColumne(oled_screen_128_64, 25+i, (25+i % 2 == 0) ? false : true);
-    delay(1000);
-  }*/
-  
+  delay(5000);
 }
