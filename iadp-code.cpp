@@ -29,9 +29,12 @@ TaskHandle_t tempTaskHandle = NULL;
 
 
 void setup() {
+  DHTSensorValue tempDht11Data;
+  char cDate[11] = "00.00.0000";
+  char cTime[6] = "00:00";
+
   Serial.begin(SERIAL_SPEED);
   Settings = createMainSettings();
-
   dht = setupDHTSensor(Settings.sensors.dht_sensor_pin);
   oled_screen_128_64 = setupDisplayOLED(
     Settings.display_oled.width,
@@ -42,13 +45,14 @@ void setup() {
     Settings.display_oled.cs_pin
   );
 
+  tempDht11Data.humidity = 0;
+  tempDht11Data.temperature = 0;
+
   displaySplashScreen(oled_screen_128_64);
   delay(5000);
 
   drawGrid(oled_screen_128_64);
-  displayLeftColumne(oled_screen_128_64, 0, 0);
-  displayRightColumne(oled_screen_128_64, 0, false);
-  displayNotConnectedSignalWifi(oled_screen_128_64);
+  drawMainPage(oled_screen_128_64, cDate, cTime, tempDht11Data, 0.0, false, false);
   displayAllOnScreen(oled_screen_128_64);
   
   delay(100);

@@ -312,7 +312,12 @@ namespace Saltronix {
        * @param oled_screen_128_64 reference to Adafruit class
        */
       void displaySplashScreen(Adafruit_SSD1306 &oled_screen_128_64) {
+        int pointX = (128-sizeof(_T_PL_WELCOME))/2.5;
+        int pointY = 16/2;
+
         oled_screen_128_64.clearDisplay();
+        oled_screen_128_64.setCursor(pointX, pointY);
+        oled_screen_128_64.print(_T_PL_WELCOME);
         oled_screen_128_64.drawBitmap(0, 16, IMAGE_LOGO_SPLASH, IMAGES_SIZE_SPLASH_WIDTH, IMAGES_SIZE_SPLASH_HEIGHT, 1);
         oled_screen_128_64.display();
       }
