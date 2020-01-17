@@ -17,12 +17,13 @@ void showMainView(
     displayRightColumne(dAquariumTemperature, bIsWatherLevelToLow);
     printDate(chDate);
     printTime(chTime);
-    displayAllOnScreen();
-
+    
     if (bIsWifiConnected)
         displayConnectedSignalWifi();
     else
         displayNotConnectedSignalWifi();
+
+    displayAllOnScreen();
 }
 
 #endif
