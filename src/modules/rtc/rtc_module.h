@@ -66,9 +66,9 @@ void getDateTimeFromRTCModule()
     snprintf_P(
         chRtcDateValue, 
         countof(chRtcDateValue),
-        PSTR("%02u/%02u/%04u"),
-        nowDateTime.Month(),
+        PSTR("%02u.%02u.%04u"),
         nowDateTime.Day(),
+        nowDateTime.Month(),
         nowDateTime.Year()
     );
 
