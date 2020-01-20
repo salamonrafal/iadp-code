@@ -3,6 +3,7 @@
 #include <SPI.h>
 #include "modules/oled/views.h"
 #include "modules/dht11/dht11.h"
+#include "modules/rtc/rtc_module.h"
 
 void getRoomTemperaure();
 
@@ -12,6 +13,7 @@ void setup() {
   // Setup Modules
   setupDisplayOLED();
   setupDHT11();
+  setupRTCModule();
 
   // Welcome screen
   displaySplashScreen();
@@ -20,17 +22,16 @@ void setup() {
 }
 
 void loop() {
-  char chDateValue[11] = "17.01.2020";
-  char chTimeValue[6] = "15:15";
   double dAquariumTemperatureValue = 24;
   bool bIsWatherLevelToLowValue = true;
   bool bIsWifiConnectedValue = false;
   
   getRoomTemperaure();
-
+  getDateTimeFromRTCModule();
+  
   showMainView(
-    chDateValue, 
-    chTimeValue, 
+    chRtcDateValue, 
+    chRtcTimeValue, 
     dAquariumTemperatureValue, 
     bIsWatherLevelToLowValue, 
     stSensorDHTValue, 
