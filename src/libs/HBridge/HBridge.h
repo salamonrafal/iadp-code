@@ -21,7 +21,6 @@ struct MotorsPins_st
     struct MotorPins_st motorC;
 };
 
-
 typedef enum {
     MOTOR_A = 0,
     MOTOR_B = 1,
@@ -32,6 +31,13 @@ MOTOR_TYPE_t;
 class HBridge
 {
     public:
+
+        typedef enum {
+            FORWARD,
+            REVERSION
+        }
+        MOTOR_DIRECTION_t;
+
         /**
          * @brief Setup H-bridge
          * 
@@ -39,7 +45,31 @@ class HBridge
          * @param motorBPins Pins for motor B
          * @param motorCPins Pins for motor C
          */
-        void setup(MotorPins_st motorAPins, MotorPins_st motorBPins, MotorPins_st motorCPins);
+        void setup(MotorPins_st motorAPins, MotorPins_st motorBPins, MotorPins_st motorCPins, bool debug = false);
+
+        /**
+         * @brief Enable motor for specific direction
+         * 
+         * @param motorType type of motor (enum)
+         * @param direction wich direction should be run
+         */
+        void run(MOTOR_TYPE_t motorType, MOTOR_DIRECTION_t direction);
+
+        /**
+         * @brief Enable motor for specific direction and time (in seconds)
+         * 
+         * @param motorType type of motor (enum)
+         * @param direction wich direction should be run
+         * @param time how long motor should be run
+         */
+        void run(MOTOR_TYPE_t motorType, MOTOR_DIRECTION_t direction, int time);
+
+        /**
+         * @brief Disable motor
+         * 
+         * @param motorType type of motor (enum)
+         */
+        void stop(MOTOR_TYPE_t motorType);
 
     protected:
         MotorsPins_st motorPins;
@@ -53,6 +83,7 @@ class HBridge
         void setPin (MOTOR_TYPE_t motorType, MotorPins_st pins);
 
     private:
+        bool debug = false;
 
 };
 
