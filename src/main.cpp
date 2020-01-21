@@ -4,6 +4,7 @@
 #include "modules/oled/views.h"
 #include "modules/dht11/dht11.h"
 #include "modules/rtc/rtc_module.h"
+#include "modules/hbridge/hbridge.h"
 
 void getRoomTemperaure();
 
@@ -14,6 +15,7 @@ void setup() {
   setupDisplayOLED();
   setupDHT11();
   setupRTCModule();
+  setupBridge();
 
   // Welcome screen
   displaySplashScreen();
