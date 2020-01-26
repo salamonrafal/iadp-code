@@ -15,12 +15,11 @@ void setup() {
   setupDisplayOLED();
   setupDHT11();
   setupRTCModule();
-  setupBridge();
-
+  
   // Welcome screen
   displaySplashScreen();
   displayAllOnScreen();
-  delay(5000);
+  setupBridge();
 }
 
 void loop() {
