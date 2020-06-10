@@ -1,0 +1,10 @@
+{
+    "name": "HBridge",
+    "version": "1.0.0",
+    "description": "Manage H-bridge for ESP32",
+    "keywords": "esp,eps32,h-bridge,hbridge,motor",
+    "authors": {
+        "name": "Rafał Salamon",
+        "email": "rasa@salamonrafal.pl"
+    }
+}
