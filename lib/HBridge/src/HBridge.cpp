@@ -3,7 +3,7 @@
  * 
  * Item: https://aliexpress.com/item/738657859.html
  ******************************************************************/
-#include "libs/HBridge/HBridge.h"
+#include "HBridge.h"
 #include <stdexcept>
 
 void HBridge::setup(MotorPins_st motorAPins, MotorPins_st motorBPins, MotorPins_st motorCPins, bool debug)

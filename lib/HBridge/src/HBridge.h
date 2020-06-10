@@ -7,8 +7,8 @@
 #define _HBRIDGE_H_LIBS_
 
 #include <Arduino.h>
-#include "enums.h"
-#include "structs.h"
+#include "HBridgeEnums.h"
+#include "HBridgeStructs.h"
 
 class HBridge
 {
@@ -16,15 +16,13 @@ class HBridge
         typedef enum {
             FORWARD,
             REVERSION
-        }
-        MOTOR_DIRECTION_t;
+        } MOTOR_DIRECTION_t;
 
         typedef enum {
             MOTOR_A,
             MOTOR_B,
             MOTOR_C
-        }
-        MOTOR_TYPE_t;
+        } MOTOR_TYPE_t;
 
         /**
          * @brief Setup H-bridge

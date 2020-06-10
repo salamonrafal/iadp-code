@@ -1,6 +1,6 @@
 #ifndef _HBRIDGE_H_
 #define _HBRIDGE_H_
-#include "libs/HBridge/HBridge.h"
+#include <HBridge.h>
 #include <Arduino.h>
 
 HBridge bridge;
@@ -13,15 +13,15 @@ void setupBridge()
 
     myMotorA.enable = 32;
     myMotorA.forward = 33;
-    myMotorA.reversion = 0;
+    myMotorA.reversion = 25;
 
-    myMotorB.enable = 25;
-    myMotorB.forward = 26;
-    myMotorB.reversion = 0;
+    myMotorB.enable = 26;
+    myMotorB.forward = 27;
+    myMotorB.reversion = 14;
 
-    myMotorC.enable = 27;
-    myMotorC.forward = 14;
-    myMotorC.reversion =  0;
+    myMotorC.enable = 12;
+    myMotorC.forward = 13;
+    myMotorC.reversion =  1;
 
     try 
     {
