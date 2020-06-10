@@ -5,31 +5,30 @@
 
 HBridge bridge;
 
+MotorPins_st setupPinsMotor (uint8_t enable, uint8_t forward, uint8_t reversion)
+{
+    MotorPins_st myMotor;
+
+    myMotor.enable = enable;
+    myMotor.forward = forward;
+    myMotor.reversion = reversion;
+
+    return myMotor;
+}
+
 void setupBridge() 
 {
-    MotorPins_st myMotorA;
-    MotorPins_st myMotorB;
-    MotorPins_st myMotorC;
-
-    myMotorA.enable = 32;
-    myMotorA.forward = 33;
-    myMotorA.reversion = 25;
-
-    myMotorB.enable = 26;
-    myMotorB.forward = 27;
-    myMotorB.reversion = 14;
-
-    myMotorC.enable = 12;
-    myMotorC.forward = 13;
-    myMotorC.reversion =  1;
-
     try 
     {
-        bridge.setup(myMotorA, myMotorB, myMotorC, true);
+        bridge.setup(
+            setupPinsMotor(32, 33, 25), 
+            setupPinsMotor(26, 27, 14), 
+            setupPinsMotor(1, 3, 17), 
+            true
+        );
         bridge.selfTest();
     } catch (...) {
         Serial.print("ERRRORRRRR");
     }
 };
-
 #endif // _HBRIDGE_H_

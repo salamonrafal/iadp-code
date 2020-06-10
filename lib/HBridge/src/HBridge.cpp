@@ -6,6 +6,10 @@
 #include "HBridge.h"
 #include <stdexcept>
 
+/*
+ * [Public]
+ */
+
 void HBridge::setup(MotorPins_st motorAPins, MotorPins_st motorBPins, MotorPins_st motorCPins, bool debug)
 {
     HBridge::setPin(MOTOR_TYPE_t::MOTOR_A, motorAPins);
@@ -14,10 +18,43 @@ void HBridge::setup(MotorPins_st motorAPins, MotorPins_st motorBPins, MotorPins_
     HBridge::debug = debug;
 }
 
+void HBridge::run(MOTOR_TYPE_t motorType, MOTOR_DIRECTION_t direction)
+{
+    controlMotor(motorType, direction, true);
+}
+
+void HBridge::run(MOTOR_TYPE_t motorType, MOTOR_DIRECTION_t direction, int time)
+{
+    controlMotor(motorType, direction, true);
+    delay(time);
+    stop(motorType);
+}
+
+void HBridge::stop(MOTOR_TYPE_t motorType)
+{
+    controlMotor(motorType, MOTOR_DIRECTION_t::FORWARD, false);
+    controlMotor(motorType, MOTOR_DIRECTION_t::REVERSION, false);
+}
+
+void HBridge::selfTest()
+{
+    run(MOTOR_TYPE_t::MOTOR_A, MOTOR_DIRECTION_t::FORWARD, 1000);
+    run(MOTOR_TYPE_t::MOTOR_A, MOTOR_DIRECTION_t::REVERSION, 1000);
+
+    run(MOTOR_TYPE_t::MOTOR_B, MOTOR_DIRECTION_t::FORWARD, 1000);
+    run(MOTOR_TYPE_t::MOTOR_B, MOTOR_DIRECTION_t::REVERSION, 1000);
+
+    run(MOTOR_TYPE_t::MOTOR_C, MOTOR_DIRECTION_t::FORWARD, 1000);
+    run(MOTOR_TYPE_t::MOTOR_C, MOTOR_DIRECTION_t::REVERSION, 1000);
+}
+
+/*
+ * [Protected ]
+ */
+
 void HBridge::setPin(MOTOR_TYPE_t motorType, MotorPins_st pins)
 {
-    switch (motorType)
-    {
+    switch (motorType) {
         case MOTOR_TYPE_t::MOTOR_A:
             HBridge::motorPins.motorA = pins;
             break;
@@ -42,36 +79,61 @@ void HBridge::setPinMode(MOTOR_TYPE_t motorType)
     uint8_t men = HBridge::getPin(motorType, PIN_TYPE_t::ENABLE);
     uint8_t mfw = HBridge::getPin(motorType, PIN_TYPE_t::FORWARD);
     uint8_t mrv = HBridge::getPin(motorType, PIN_TYPE_t::REVERSION);
-
-
-    if (HBridge::debug) {
-        Serial.println("------ setPinsMode --------");
-        Serial.print("Motor: ");
-        Serial.println(motorType);
-
-        Serial.print("enable: ");
-        Serial.println(men);
-
-        Serial.print("forward: ");
-        Serial.println(mfw);
-
-        Serial.print("reversion: ");
-        Serial.println(mrv);
-        Serial.println("------ setPinsMode -- END. ---");
+    
+    if (men != 0) {
+        pinMode(men, OUTPUT);
+        digitalWrite(men, HIGH);
+    }
+        
+    if (mfw != 0) {
+        pinMode(mfw, OUTPUT);
+        digitalWrite(mfw, LOW);
     }
 
-    pinMode(men, OUTPUT);
-    pinMode(mfw, OUTPUT);
-
-    if (mrv != 0)
+    if (mrv != 0) {
         pinMode(mrv, OUTPUT);
+        digitalWrite(men, LOW);
+    }
+}
 
+void HBridge::controlMotor(MOTOR_TYPE_t motorType, MOTOR_DIRECTION_t direction, bool enable)
+{
+    uint8_t enablePin = HBridge::getPin(motorType, PIN_TYPE_t::ENABLE);
+    uint8_t directionPin = HBridge::getPin(motorType, HBridge::tranformDirectionToPinType(direction));
+
+    HBridge::setPinMode(motorType);
+
+    if (enable == true) {
+        digitalWrite(enablePin, HIGH);
+        digitalWrite(directionPin, HIGH);
+    } else {
+        digitalWrite(enablePin, LOW);
+        digitalWrite(directionPin, LOW);
+    }
+}
+
+uint8_t HBridge::getPin(MOTOR_TYPE_t motorType, PIN_TYPE_t pinType) 
+{
+    MotorPins_st tmpPins = HBridge::getPins(motorType);
+    
+    switch (pinType) {
+        case PIN_TYPE_t::ENABLE:
+            return tmpPins.enable;
+
+        case PIN_TYPE_t::FORWARD :
+            return tmpPins.forward;
+
+        case PIN_TYPE_t::REVERSION :
+            return tmpPins.reversion;
+
+        default:
+            throw std::runtime_error("WRONG PIN TYPE");
+    }
 }
 
 MotorPins_st HBridge::getPins(MOTOR_TYPE_t motorType) 
 {
-    switch (motorType)
-    {
+    switch (motorType) {
         case MOTOR_TYPE_t::MOTOR_A:
             return HBridge::motorPins.motorA;
             break;
@@ -87,93 +149,4 @@ MotorPins_st HBridge::getPins(MOTOR_TYPE_t motorType)
         default:
             throw std::runtime_error("WRONG MOTOR TYPE");
     }
-}
-
-uint8_t HBridge::getPin(MOTOR_TYPE_t motorType, PIN_TYPE_t pinType) 
-{
-    MotorPins_st tmpPins = HBridge::getPins(motorType);
-    
-    switch (pinType)
-    {
-        case PIN_TYPE_t::ENABLE:
-            return tmpPins.enable;
-
-        case PIN_TYPE_t::FORWARD :
-            return tmpPins.forward;
-
-        case PIN_TYPE_t::REVERSION :
-            return tmpPins.reversion;
-
-        default:
-            throw std::runtime_error("WRONG PIN TYPE");
-    }
-}
-
-void HBridge::controlMotor(MOTOR_TYPE_t motorType, MOTOR_DIRECTION_t direction, bool enable)
-{
-    uint8_t enablePin = HBridge::getPin(motorType, PIN_TYPE_t::ENABLE);
-    uint8_t directionPin = HBridge::getPin(motorType, HBridge::tranformDirectionToPinType(direction));
-
-    HBridge::setPinMode(motorType);
-
-    if (enable == true) 
-    {
-        if (HBridge::debug) 
-        {
-            Serial.println("------- controlMotor ENABLE ---------");
-        }
-        digitalWrite(enablePin, HIGH);
-        delay(1000);
-        digitalWrite(directionPin, HIGH);
-    } else {
-
-        if (HBridge::debug) 
-        {
-            Serial.println("------- controlMotor DISABLE ---------");
-        }
-        digitalWrite(enablePin, LOW);
-        delay(1000);
-        digitalWrite(directionPin, LOW);
-    }
-
-    if (HBridge::debug) 
-    {
-        Serial.print("Motor Type: ");
-        Serial.println(motorType);
-
-        Serial.print("Motor direction: ");
-        Serial.println(direction);
-
-        Serial.print("enablePin: ");
-        Serial.println(enablePin);
-
-        Serial.print("directionPin: ");
-        Serial.println(directionPin);
-
-        Serial.print("enable: ");
-        Serial.println(enable);
-
-        Serial.println("------ controlMotor ENABLE -- END. ---");
-    }
-}
-
-void HBridge::selfTest()
-{
-    controlMotor(MOTOR_TYPE_t::MOTOR_A, MOTOR_DIRECTION_t::FORWARD, true);
-    delay(1000);
-
-
-    controlMotor(MOTOR_TYPE_t::MOTOR_B, MOTOR_DIRECTION_t::FORWARD, true);
-    delay(1000);
-    
-
-    controlMotor(MOTOR_TYPE_t::MOTOR_C, MOTOR_DIRECTION_t::FORWARD, true);
-    delay(1000);
-
-    controlMotor(MOTOR_TYPE_t::MOTOR_A, MOTOR_DIRECTION_t::FORWARD, false);
-    delay(200);
-    controlMotor(MOTOR_TYPE_t::MOTOR_B, MOTOR_DIRECTION_t::FORWARD, false);
-    delay(200);
-    controlMotor(MOTOR_TYPE_t::MOTOR_C, MOTOR_DIRECTION_t::FORWARD, false);
-    delay(200);
 }
