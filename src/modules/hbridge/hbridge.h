@@ -26,7 +26,7 @@ void setupBridge()
             setupPinsMotor(1, 3, 17), 
             true
         );
-        bridge.selfTest();
+        // bridge.selfTest();
     } catch (...) {
         Serial.print("ERRRORRRRR");
     }

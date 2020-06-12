@@ -4,3 +4,6 @@
 .vscode/launch.json
 .vscode/ipch
 .vscode/
+src/_config_*.h
+__pycache__
+*.pyc
