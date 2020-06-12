@@ -5,6 +5,7 @@
 #include "modules/dht11/dht11.h"
 #include "modules/rtc/rtc_module.h"
 #include "modules/hbridge/hbridge.h"
+#include "modules/wifi/wifi.h"
 
 void getRoomTemperaure();
 
@@ -20,15 +21,18 @@ void setup() {
   displaySplashScreen();
   displayAllOnScreen();
   setupBridge();
+  setUpWiFiServer();
 }
 
 void loop() {
   double dAquariumTemperatureValue = 24;
   bool bIsWatherLevelToLowValue = true;
-  bool bIsWifiConnectedValue = false;
+  bool bIsWifiConnectedValue = WiFi.status() == WL_CONNECTED ? true : false;
   
   getRoomTemperaure();
   getDateTimeFromRTCModule();
+
+  handleRestCalls();
   
   showMainView(
     chRtcDateValue, 
