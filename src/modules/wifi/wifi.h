@@ -4,32 +4,28 @@
 #include <WiFi.h>
 #include <aREST.h>
 
-// Create aREST instance
+#define DEVICE_ID "9b51f25e"
+#define WIFI_CONNECT_DELAY_TRY 1000
+
 aREST rest = aREST();
 
-// WiFi parameters
-const char* ssid = "SalamonNet24";
-const char* password = "Grzegorz84$";
-const char* deviceId = "9b51f25e";
-const char* deviceName = "iadp-1.0.0-esp32-30";
-const char* pingVariable = "pong";
+const char *pingVariable = "pong";
+const char *device_name = "iadp-1.0.0-esp32-30";
 int status = WL_IDLE_STATUS;
-const unsigned int wifiConnectDelayTry = 1000;
 
-// Create an instance of the server
 WiFiServer server(80);
 
-void setUpWiFiServer(void)
+void setUpWiFiServer(char ssid[64], char pwd[64])
 {
   rest.variable("ping", &pingVariable);
 
-  rest.set_id(deviceId);
-  rest.set_name(deviceName);
+  rest.set_id(DEVICE_ID);
+  rest.set_name(device_name);
 
   while ( status != WL_CONNECTED) {
-    WiFi.setHostname(deviceName);
-    status = WiFi.begin(ssid, password);
-    delay(wifiConnectDelayTry);
+    WiFi.setHostname(device_name);
+    status = WiFi.begin(ssid, pwd);
+    delay(WIFI_CONNECT_DELAY_TRY);
   }
   
   Serial.println(WiFi.localIP());
@@ -38,7 +34,6 @@ void setUpWiFiServer(void)
 
 void handleRestCalls(void)
 {
-    // Handle REST calls
     WiFiClient client = server.available();
     
     if (!client) {
@@ -51,5 +46,4 @@ void handleRestCalls(void)
 
     rest.handle(client);
 }
-
 #endif

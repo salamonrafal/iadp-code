@@ -6,12 +6,14 @@
 #include "modules/rtc/rtc_module.h"
 #include "modules/hbridge/hbridge.h"
 #include "modules/wifi/wifi.h"
+#include "helpers/configs.h"
 
 void getRoomTemperaure();
+bool bIsWifiConnectedValue = false;
 
 void setup() {
-  Serial.begin(38400);
-  
+  Serial.begin(9600);
+
   // Setup Modules
   setupDisplayOLED();
   setupDHT11();
@@ -21,13 +23,16 @@ void setup() {
   displaySplashScreen();
   displayAllOnScreen();
   setupBridge();
-  setUpWiFiServer();
+
+  if (config_check_setup_wifi()) {
+    setUpWiFiServer(ssid, password);
+    bIsWifiConnectedValue = WiFi.status() == WL_CONNECTED ? true : false;
+  }
 }
 
 void loop() {
   double dAquariumTemperatureValue = 24;
   bool bIsWatherLevelToLowValue = true;
-  bool bIsWifiConnectedValue = WiFi.status() == WL_CONNECTED ? true : false;
   
   getRoomTemperaure();
   getDateTimeFromRTCModule();

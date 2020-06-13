@@ -47,6 +47,7 @@
 			"utility": "cpp",
 			"typeinfo": "cpp",
 			"random": "cpp"
-		}
+		},
+		"python.pythonPath": "g:\\Pobieranie\\python-3.8.3.exe"
 	}
 }
