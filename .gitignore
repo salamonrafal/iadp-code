@@ -7,3 +7,4 @@
 src/_config_*.h
 __pycache__
 *.pyc
+*.code-workspace
