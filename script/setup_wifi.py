@@ -5,6 +5,7 @@ WIFI_FILE_CONFIG_NAME = "_config_wifi.h"
 MAIN_FILE_CONFIG_NAME = "app_config.h"
 CONSTVAR_NAME = "APP_CONFIG_SETUP_WIFI"
 TEMPL_FILE = "config_templates/wifi.conf"
+MAIN_TEMPL_FILE = "config_templates/main.conf"
 
 
 def main(argv):
@@ -31,7 +32,14 @@ def main(argv):
         elif opt == '-r':
             reset = 1
 
-    if helpers.validate_configuration(main_config_path, CONSTVAR_NAME) != 1 or reset == 1:
+    try:
+        is_validate = helpers.validate_configuration(main_config_path, CONSTVAR_NAME)
+    except FileNotFoundError:
+        main_template_content = helpers.load_content_file(MAIN_TEMPL_FILE)
+        helpers.save_file("../src/" + MAIN_FILE_CONFIG_NAME , main_template_content)
+        is_validate = 0
+
+    if is_validate != 1 or reset == 1:
         template_content = helpers.load_content_file(TEMPL_FILE)
 
         print ("\r\n \r\nYou need configure your wifi connection before comailing code! \r\n")
