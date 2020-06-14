@@ -3,6 +3,6 @@
 
 #define APP_CONFIG_SETUP_WIFI false
 
-/* <<!INCLUDE WIFI>> */
+/*<<!INCLUDE_WIFI>>*/
 
 #endif
