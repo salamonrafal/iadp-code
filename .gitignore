@@ -8,3 +8,4 @@ src/_config_*.h
 __pycache__
 *.pyc
 *.code-workspace
+src/app_config.h
