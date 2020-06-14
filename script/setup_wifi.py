@@ -1,5 +1,13 @@
+"""Sertup wifi configuration
+
+This module provide function to help setup wifi configuration. 
+List of avalible functions:
+
+setup_wifi_configuration() -- Setup wifi configuration
+"""
+__all__ = ["setup_wifi_configuration"]
+
 import modules.helpers as helpers
-import sys, getopt
 
 WIFI_FILE_CONFIG_NAME = "_config_wifi.h"
 MAIN_FILE_CONFIG_NAME = "app_config.h"
@@ -7,30 +15,15 @@ CONSTVAR_NAME = "APP_CONFIG_SETUP_WIFI"
 TEMPL_FILE = "config_templates/wifi.conf"
 MAIN_TEMPL_FILE = "config_templates/main.conf"
 
-
-def main(argv):
+def setup_wifi_configuration(reset = 0):
     """Main function for handle setup wifi configuration for board
 
     Keywords arguments:
-    argv - command line arguments
+    reset - reset flags
     """
 
-    help_text = "\r\nsetup_wifi.py [-h] [-r] \r\n    Options: \r\n      -h   Display this message \r\n      -r   Reset wifi setup\r\n" 
     main_config_path = "../src/" + MAIN_FILE_CONFIG_NAME 
     reset = 0
-
-    try:
-        opts, args  = getopt.getopt(argv,"hr")
-    except getopt.GetoptError:
-        print(help_text)
-        sys.exit()
-    
-    for (opt, arg) in opts:
-        if opt == '-h':
-            print(help_text)
-            sys.exit()
-        elif opt == '-r':
-            reset = 1
 
     try:
         is_validate = helpers.validate_configuration(main_config_path, CONSTVAR_NAME)
@@ -52,5 +45,3 @@ def main(argv):
         helpers.modify_main_config_file(main_config_path, "INCLUDE_WIFI", WIFI_FILE_CONFIG_NAME, CONSTVAR_NAME)
     else:
         print ("\r\n \r\nYou allready configured WiFi connection for your baord \r\n")
-        
-main(sys.argv[1:])
