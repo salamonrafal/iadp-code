@@ -20,13 +20,21 @@ void setup() {
   setupRTCModule();
   
   // Welcome screen
+  fade_effect(ScreenEfects_t::EFFECT_FADEOUT, false);
   displaySplashScreen();
   displayAllOnScreen();
+  fade_effect(ScreenEfects_t::EFFECT_FADEIN, true);
   setupBridge();
-
+  delay(2000);
+  
   if (config_check_setup_wifi()) {
-    setUpWiFiServer(ssid, password);
+    showLoadingView();
+    set_up_wifi_server(ssid, password);
+
     bIsWifiConnectedValue = WiFi.status() == WL_CONNECTED ? true : false;
+
+    showIpAddress(localIp.toString());
+    delay(2000);
   }
 }
 
@@ -37,7 +45,7 @@ void loop() {
   getRoomTemperaure();
   getDateTimeFromRTCModule();
 
-  handleRestCalls();
+  handle_rest_calls();
   
   showMainView(
     chRtcDateValue, 

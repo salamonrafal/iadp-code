@@ -26,4 +26,17 @@ void showMainView(
     displayAllOnScreen();
 }
 
+void showLoadingView()
+{
+    prinConnecting("Connection ...");
+    displayAllOnScreen();
+}
+
+void showIpAddress(String ipAddressString)
+{
+    clearAllOnScreen();
+    printInitText("IP: " + ipAddressString);
+    displayAllOnScreen();
+}
+
 #endif
